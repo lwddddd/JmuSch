@@ -9,7 +9,7 @@ public class ShareMethod {
 	public static int getWeekDay(){
 		Calendar calendar= Calendar.getInstance();
 		Date date=new Date(System.currentTimeMillis());
-		calendar.setTime(date);
+		calendar.setTime(date);;
 		int weekDay=calendar.get(Calendar.DAY_OF_WEEK);
 		if(weekDay==1)
 			weekDay=7;

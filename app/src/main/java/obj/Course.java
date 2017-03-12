@@ -95,6 +95,7 @@ public class Course extends DataSupport{
 		String cN=this.getClassNum();
 		//if(!wD.equals("")&&!cN.equals(""))
 		this.updateAll("weekDay = ? and classNum=?",wD,cN);
+
 	}
 	public void reSet(){
 		this.setToDefault("courseName");
@@ -102,5 +103,4 @@ public class Course extends DataSupport{
 		this.setToDefault("teacher");
 
 	}
-
 }

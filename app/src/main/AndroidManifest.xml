@@ -8,11 +8,14 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="21" />
 
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/tu2"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
@@ -20,12 +23,17 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchActivity"
-        android:label="@string/search">
-        </activity>
+        <activity
+            android:name=".SearchActivity"
+            android:label="@string/search" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".SettingActivity"></activity>
     </application>
 
 </manifest>

@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.litepal.crud.DataSupport;
 
@@ -39,7 +38,8 @@ public class Course_add {
 
     }
     //添加课程的窗体
-    public void add(Context context, final int weekDay, final int classNum, final CourseAdapter adapter){
+    public Course_add(Context context, final int weekDay, final int classNum, final CourseAdapter adapter){
+
         mWeekDay=weekDay;
         mClassNum=classNum;
         LayoutInflater inflater= LayoutInflater.from(context);
@@ -49,8 +49,7 @@ public class Course_add {
         findWidgetes();
         final AlertDialog.Builder ad =new AlertDialog.Builder(context);
         ad.setView(view);
-        ad.setTitle("创建课程");
-        ad.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+        ad.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Course cou=new Course();
@@ -91,9 +90,8 @@ public class Course_add {
             }
         });
         ad.show();
-
-
     }
+
     //删除课程
     public void delete(Context context, final int weekDay, final int classNum, final CourseAdapter adapter){
         Course course=new Course();
@@ -125,22 +123,22 @@ public class Course_add {
                 break;
             default:
         }
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();//删除信息
         Log.d("Main","delete");
 
     }
+
     //修改课程的窗体
     public void edit(Context context, final int weekDay, final int classNum, final CourseAdapter adapter){
         mWeekDay=weekDay;
         mClassNum=classNum;
         LayoutInflater inflater= LayoutInflater.from(context);
         mContext=context;
-        View view = inflater.inflate(R.layout.course_add,null);
+        View view = inflater.inflate(R.layout.course_edit,null);
         mView=view;
         findWidgetes();
         final AlertDialog.Builder ad =new AlertDialog.Builder(context);
         ad.setView(view);
-        ad.setTitle("修改课程");
         List<Course> list=DataSupport.where("weekDay = ? and classNum=?",String.valueOf(weekDay),String.valueOf(classNum)).find(Course.class);
         final Course course=list.get(0);
         course_name.setText(course.getCourseName());
@@ -187,6 +185,13 @@ public class Course_add {
         ad.show();
         Log.d("Main","edit");
     }
+
+    //删除课程的对话框
+    private void confirm_delete()
+    {
+        new AlertDialog.Builder(mContext).setTitle("系统提示");
+    }
+
     private void findWidgetes() {
         course_name=(EditText)mView.findViewById(R.id.course_add_EditText_courseName);
         course_address=(EditText)mView.findViewById(R.id.course_add_EditText_loca);

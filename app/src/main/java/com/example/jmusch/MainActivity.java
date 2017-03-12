@@ -83,15 +83,16 @@ public class MainActivity extends AppCompatActivity {
 			editor.putInt("weekNum",1).commit();
 			CourseList.setWeekNum(1);
 			//第一次创建对数据库对其赋初值
-			for(int i=1;i<=7;i++)
-				for(int j=1;j<=12;j++)
-				{
-					Course course=new Course();
+			for(int i=1;i<=7;i++) {
+				for (int j = 1; j <=12; j++) {
+					Course course = new Course();
 					course.setWeekDay(String.valueOf(i));
 					course.setClassNum(String.valueOf(j));
 					course.save();
+
 				}
-			adbSuit();
+				adbSuit();
+			}
 		}
 		else{
 			int weekNum=pref.getInt("weekNum",1);
@@ -102,8 +103,24 @@ public class MainActivity extends AppCompatActivity {
 		mToolbar = (Toolbar) findViewById(R.id.tool_bar);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mNavigationView=(NavigationView) findViewById(R.id.id_nv_menu);
-		//mListView = (ListView) findViewById(R.id.list_view);
-		//mAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,str);
+		mNavigationView.setItemIconTintList(null);
+		mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+					@Override
+					public boolean onNavigationItemSelected(MenuItem item) {
+						//在这里处理item的点击事件
+						int i=item.getItemId();
+						switch (i)
+						{
+							case R.id.nav_setting:{
+								Intent intent=new Intent(MainActivity.this,SettingActivity.class);
+								startActivity(intent);
+								break;
+							}
+						}
+						return true;
+					}
+				}
+		);
 		mToolbar.setTitle("第"+CourseList.getWeekNum()+"周");
 		setSupportActionBar(mToolbar);
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -148,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
 		MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),
 				this);
 		viewPager.setAdapter(adapter);
-		viewPager.setCurrentItem(ShareMethod.getWeekDay()-1);
 		//TabLayout
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 		tabLayout.setupWithViewPager(viewPager);
@@ -270,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 	private ArrayList<String> createArrays() {
 		ArrayList<String> list = new ArrayList<String>();
-		for (int i = 1; i < 20; i++) {
+		for (int i = 1; i <=20; i++) {
 			list.add("第"+i+"周");
 		}
 		return list;
