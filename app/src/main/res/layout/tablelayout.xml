@@ -11,7 +11,7 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#f4f9f9"
+        android:background="#fff"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/theme_red"
         app:tabIndicatorColor="@color/theme_red"
@@ -22,7 +22,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
-        android:background="#e4faf8"
+        android:background="#fff"
         ></View>
 
     <android.support.v4.view.ViewPager

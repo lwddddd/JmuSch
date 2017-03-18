@@ -31,9 +31,8 @@
             android:name=".SearchActivity"
             android:label="@string/search" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".SettingActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".SettingActivity"></activity>
     </application>
 
 </manifest>

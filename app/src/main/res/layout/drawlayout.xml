@@ -4,12 +4,14 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/toolbar"/>
      <include layout="@layout/tablelayout"></include>
     <android.support.design.widget.NavigationView
         android:id="@+id/id_nv_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
+        android:background="#fff"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header"
         app:menu="@menu/drawerlayout_meau"

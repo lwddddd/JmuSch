@@ -115,37 +115,8 @@ public class PageFragment extends Fragment {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Course_add add=new Course_add(view.getContext(),currentDay,id+1,adapter);
+                            Course_add add=new Course_add(view.getContext(),currentDay,id*2+1,adapter,id);
                             //如果单击了该列表项，则跳转到编辑课程信息的界面
-//                            Course cou=new Course();
-//                            cou.setClassNum(String.valueOf(id+1));
-//                            cou.setCourseName("dota");
-//                            switch (currentDay) {
-//                                case 1:
-//                                    courseList.getCourseList1().set(id, cou);
-//                                    break;
-//                                case 2:
-//                                    courseList.getCourseList2().set(id, cou);
-//                                    break;
-//                                case 3:
-//                                    courseList.getCourseList3().set(id, cou);
-//                                    break;
-//                                case 4:
-//                                    courseList.getCourseList4().set(id, cou);
-//                                    break;
-//                                case 5:
-//                                    courseList.getCourseList5().set(id, cou);
-//                                    break;
-//                                case 6:
-//                                    courseList.getCourseList6().set(id, cou);
-//                                    break;
-//                                case 7:
-//                                    courseList.getCourseList7().set(id, cou);
-//                                    break;
-//                                default:
-//                            }
-//                            adapter.notifyDataSetChanged();
-
                         }
                     });
                     dialog.create().show();
@@ -164,7 +135,7 @@ public class PageFragment extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         Course_add add=new Course_add();
-                                        add.delete(view.getContext(),currentDay,id+1,adapter);
+                                        add.delete(view.getContext(),currentDay,id*2+1,adapter,id);
                                     }
                                 });
                                 dialog1.setNegativeButton("取消",null);
@@ -173,7 +144,7 @@ public class PageFragment extends Fragment {
                             else
                             {
                                 Course_add add=new Course_add();
-                                add.edit(view.getContext(),currentDay,id+1,adapter);
+                                add.edit(view.getContext(),currentDay,id*2+1,adapter,id);
                             }
                         }
                     });

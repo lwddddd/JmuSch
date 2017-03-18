@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:id="@+id/linear_layout"
     android:weightSum="1"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:background="#F7F3E9">
     <!-- Toolbar -->
     <include layout="@layout/toolbar"/>
     <!--查询窗口-->

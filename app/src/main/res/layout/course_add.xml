@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.08"
         android:background="@color/theme_red"
+        android:id="@+id/course_add_tag"
         android:text="@string/newcourse"
         android:textSize="19sp"
         android:textColor="@color/white"

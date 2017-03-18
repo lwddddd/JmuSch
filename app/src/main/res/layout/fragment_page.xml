@@ -16,8 +16,9 @@
             android:scrollbars="none"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="#0099ff"
-            android:dividerHeight="0.4dip"  />
+            android:divider="#fff"
+            android:dividerHeight="7dip"
+            android:layout_margin="7dip"/>
 
     </LinearLayout>
 

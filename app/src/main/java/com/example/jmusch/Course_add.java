@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.litepal.crud.DataSupport;
 
@@ -38,7 +39,7 @@ public class Course_add {
 
     }
     //添加课程的窗体
-    public Course_add(Context context, final int weekDay, final int classNum, final CourseAdapter adapter){
+    public Course_add(Context context, final int weekDay, final int classNum, final CourseAdapter adapter, final int where){
 
         mWeekDay=weekDay;
         mClassNum=classNum;
@@ -49,6 +50,8 @@ public class Course_add {
         findWidgetes();
         final AlertDialog.Builder ad =new AlertDialog.Builder(context);
         ad.setView(view);
+        TextView tagName=(TextView)view.findViewById(R.id.course_add_tag);
+        tagName.setText("新建课程");
         ad.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -64,25 +67,25 @@ public class Course_add {
                 cou.saveAdb();
                 switch (mWeekDay) {
                     case 1:
-                        courseList.getCourseList1().set(mClassNum-1, cou);
+                        courseList.getCourseList1().set(where, cou);
                         break;
                     case 2:
-                        courseList.getCourseList2().set(mClassNum-1, cou);
+                        courseList.getCourseList2().set(where, cou);
                         break;
                     case 3:
-                        courseList.getCourseList3().set(mClassNum-1, cou);
+                        courseList.getCourseList3().set(where, cou);
                         break;
                     case 4:
-                        courseList.getCourseList4().set(mClassNum-1, cou);
+                        courseList.getCourseList4().set(where, cou);
                         break;
                     case 5:
-                        courseList.getCourseList5().set(mClassNum-1, cou);
+                        courseList.getCourseList5().set(where, cou);
                         break;
                     case 6:
-                        courseList.getCourseList6().set(mClassNum-1, cou);
+                        courseList.getCourseList6().set(where, cou);
                         break;
                     case 7:
-                        courseList.getCourseList7().set(mClassNum-1, cou);
+                        courseList.getCourseList7().set(where, cou);
                         break;
                     default:
                 }
@@ -93,7 +96,7 @@ public class Course_add {
     }
 
     //删除课程
-    public void delete(Context context, final int weekDay, final int classNum, final CourseAdapter adapter){
+    public void delete(Context context, final int weekDay, final int classNum, final CourseAdapter adapter,int where){
         Course course=new Course();
         course.setClassNum(String.valueOf(classNum));
         course.setWeekDay(String.valueOf(weekDay));
@@ -101,25 +104,25 @@ public class Course_add {
         course.saveAdb();
         switch (weekDay) {
             case 1:
-                courseList.getCourseList1().set(classNum-1, course);
+                courseList.getCourseList1().set(where, course);
                 break;
             case 2:
-                courseList.getCourseList2().set(classNum-1, course);
+                courseList.getCourseList2().set(where, course);
                 break;
             case 3:
-                courseList.getCourseList3().set(classNum-1, course);
+                courseList.getCourseList3().set(where, course);
                 break;
             case 4:
-                courseList.getCourseList4().set(classNum-1, course);
+                courseList.getCourseList4().set(where, course);
                 break;
             case 5:
-                courseList.getCourseList5().set(classNum-1, course);
+                courseList.getCourseList5().set(where, course);
                 break;
             case 6:
-                courseList.getCourseList6().set(classNum-1, course);
+                courseList.getCourseList6().set(where, course);
                 break;
             case 7:
-                courseList.getCourseList7().set(classNum-1, course);
+                courseList.getCourseList7().set(where, course);
                 break;
             default:
         }
@@ -129,16 +132,18 @@ public class Course_add {
     }
 
     //修改课程的窗体
-    public void edit(Context context, final int weekDay, final int classNum, final CourseAdapter adapter){
+    public void edit(Context context, final int weekDay, final int classNum, final CourseAdapter adapter, final int where){
         mWeekDay=weekDay;
         mClassNum=classNum;
         LayoutInflater inflater= LayoutInflater.from(context);
         mContext=context;
-        View view = inflater.inflate(R.layout.course_edit,null);
+        View view = inflater.inflate(R.layout.course_add,null);
         mView=view;
         findWidgetes();
         final AlertDialog.Builder ad =new AlertDialog.Builder(context);
         ad.setView(view);
+        TextView tagName=(TextView)view.findViewById(R.id.course_add_tag);
+        tagName.setText("修改课程信息");
         List<Course> list=DataSupport.where("weekDay = ? and classNum=?",String.valueOf(weekDay),String.valueOf(classNum)).find(Course.class);
         final Course course=list.get(0);
         course_name.setText(course.getCourseName());
@@ -157,25 +162,25 @@ public class Course_add {
                 cou.saveAdb();
                 switch (mWeekDay) {
                     case 1:
-                        courseList.getCourseList1().set(mClassNum-1, cou);
+                        courseList.getCourseList1().set(where, cou);
                         break;
                     case 2:
-                        courseList.getCourseList2().set(mClassNum-1, cou);
+                        courseList.getCourseList2().set(where, cou);
                         break;
                     case 3:
-                        courseList.getCourseList3().set(mClassNum-1, cou);
+                        courseList.getCourseList3().set(where, cou);
                         break;
                     case 4:
-                        courseList.getCourseList4().set(mClassNum-1, cou);
+                        courseList.getCourseList4().set(where, cou);
                         break;
                     case 5:
-                        courseList.getCourseList5().set(mClassNum-1, cou);
+                        courseList.getCourseList5().set(where, cou);
                         break;
                     case 6:
-                        courseList.getCourseList6().set(mClassNum-1, cou);
+                        courseList.getCourseList6().set(where, cou);
                         break;
                     case 7:
-                        courseList.getCourseList7().set(mClassNum-1, cou);
+                        courseList.getCourseList7().set(where, cou);
                         break;
                     default:
                 }

@@ -3,6 +3,7 @@ package com.example.jmusch;
 import com.wx.wheelview.widget.WheelViewDialog;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +38,7 @@ import android.widget.Toast;
 import org.litepal.LitePal;
 import org.litepal.crud.DataSupport;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 	private TextView setButton = null;
 	CourseList courseList = new CourseList();
 	CourseAdapter []adapter=new CourseAdapter[7];
-
 	private Toolbar mToolbar;
 	private DrawerLayout mDrawerLayout;
 	private NavigationView mNavigationView;
@@ -85,11 +86,13 @@ public class MainActivity extends AppCompatActivity {
 			//第一次创建对数据库对其赋初值
 			for(int i=1;i<=7;i++) {
 				for (int j = 1; j <=12; j++) {
-					Course course = new Course();
-					course.setWeekDay(String.valueOf(i));
-					course.setClassNum(String.valueOf(j));
-					course.save();
-
+					if(j%2!=0)
+					{
+						Course course = new Course();
+						course.setWeekDay(String.valueOf(i));
+						course.setClassNum(String.valueOf(j));
+						course.save();
+					}
 				}
 				adbSuit();
 			}
@@ -99,28 +102,42 @@ public class MainActivity extends AppCompatActivity {
 			CourseList.setWeekNum(weekNum);
 			adbSuit();
 		}
-
+        //设置侧滑菜单和标题栏
 		mToolbar = (Toolbar) findViewById(R.id.tool_bar);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mNavigationView=(NavigationView) findViewById(R.id.id_nv_menu);
 		mNavigationView.setItemIconTintList(null);
-		mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-					@Override
-					public boolean onNavigationItemSelected(MenuItem item) {
-						//在这里处理item的点击事件
-						int i=item.getItemId();
-						switch (i)
-						{
-							case R.id.nav_setting:{
-								Intent intent=new Intent(MainActivity.this,SettingActivity.class);
-								startActivity(intent);
-								break;
-							}
-						}
-						return true;
-					}
-				}
-		);
+//		mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//			@Override public boolean onNavigationItemSelected(MenuItem menuItem) {
+//				switch (menuItem.getItemId())
+//				{
+//					case R.id.nav_alarmclock:{
+//						AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//						//    设置Title的图标
+//						builder.setIcon(R.drawable.ic_launcher);
+//						//    设置Title的内容
+//						builder.setTitle("弹出警告框");
+//						//    设置Content来显示一个信息
+//						builder.setMessage("确定删除吗？");
+//						//    设置一个PositiveButton
+//						builder.setPositiveButton("确定", new DialogInterface.OnClickListener()
+//						{
+//							@Override
+//							public void onClick(DialogInterface dialog, int which)
+//							{
+//								Toast.makeText(MainActivity.this, "positive: " + which, Toast.LENGTH_SHORT).show();
+//							}
+//						});
+////						menuItem.setChecked(true);
+////						Intent in1=new Intent(MainActivity.this,SettingActivity.class);
+////						startActivity(in1);
+//						break;
+//					}
+//					default:break;
+//				}
+//				return true;
+//			}
+//		});
 		mToolbar.setTitle("第"+CourseList.getWeekNum()+"周");
 		setSupportActionBar(mToolbar);
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -141,26 +158,8 @@ public class MainActivity extends AppCompatActivity {
 		};
 		mActionBarDrawerToggle.syncState();
 		mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
-		//mListView.setAdapter(mAdapter);
 
-
-
-//
-//		if(courseList.getCourseList1().isEmpty())
-//			for(int j=1;j<=12;j++)
-//			{
-//				Course cou=new Course();
-//				cou.setId(String.valueOf(j));
-//				courseList.getCourseList1().add(cou);
-//				courseList.getCourseList2().add(cou);
-//				courseList.getCourseList3().add(cou);
-//				courseList.getCourseList4().add(cou);
-//				courseList.getCourseList5().add(cou);
-//				courseList.getCourseList6().add(cou);
-//				courseList.getCourseList7().add(cou);
-//			}
-
-
+		//设置选项卡
 		ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 		MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),
 				this);
@@ -216,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
 		});
 }
 
-
+	//设置侧滑菜单点击事件
 	private void setupDrawerContent(NavigationView navigationView)
 	{
 		navigationView.setNavigationItemSelectedListener(
@@ -224,7 +223,17 @@ public class MainActivity extends AppCompatActivity {
 				{
 					@Override
 					public boolean onNavigationItemSelected(MenuItem menuItem) {
-						menuItem.setChecked(true);
+						int i=menuItem.getItemId();
+						switch (i)
+						{
+							case R.id.nav_setting:{
+								Intent intent=new Intent(MainActivity.this,SettingActivity.class);
+								startActivity(intent);
+								break;
+							}
+							default:
+								break;
+						}
 						mDrawerLayout.closeDrawers();
 						return true;
 					}
@@ -264,6 +273,8 @@ public class MainActivity extends AppCompatActivity {
 				break;
 			}
 			case R.id.change_weekNum:{
+//				Intent in1=new Intent(MainActivity.this,SettingActivity.class);
+//                	startActivity(in1);
 				final WheelViewDialog dialog = new WheelViewDialog(this);
 				dialog.setTitle("更改周数").setItems(createArrays()).setButtonText("确定").setDialogStyle(Color
 						.parseColor("#6699ff")).setCount(5);
@@ -277,6 +288,7 @@ public class MainActivity extends AppCompatActivity {
 						editor.putInt("weekNum",num).commit();
 					}
 				});
+
 				dialog.show();
 				break;
 			}
@@ -291,44 +303,6 @@ public class MainActivity extends AppCompatActivity {
 		}
 		return list;
 	}
-	//子 方法:为主界面添加选项卡
-	public void addCard(TabHost.TabSpec spec, String tag, int id, String name){
-		spec = tabs.newTabSpec(tag);
-		spec.setContent(id);
-		spec.setIndicator(name);
-		tabs.addTab(spec);
-	}
-
-	//listview匹配 1=初始化 else 改变
-//	public void viewChange(ListView list[], int change){
-//		if(change==1)
-//		{
-//			adapter[0]=new CourseAdapter(MainActivity.this,R.layout.course_item,courseList.getCourseList1());
-//			list[0].setAdapter(adapter[0]);
-//			adapter[1]=new CourseAdapter(MainActivity.this,R.layout.course_item,courseList.getCourseList2());
-//			list[1].setAdapter(adapter[1]);
-//			adapter[2]=new CourseAdapter(MainActivity.this,R.layout.course_item,courseList.getCourseList3());
-//			list[2].setAdapter(adapter[2]);
-//			adapter[3]=new CourseAdapter(MainActivity.this,R.layout.course_item,courseList.getCourseList4());
-//			list[3].setAdapter(adapter[3]);
-//			adapter[4]=new CourseAdapter(MainActivity.this,R.layout.course_item,courseList.getCourseList5());
-//			list[4].setAdapter(adapter[4]);
-//			adapter[5]=new CourseAdapter(MainActivity.this,R.layout.course_item,courseList.getCourseList6());
-//			list[5].setAdapter(adapter[5]);
-//			adapter[6]=new CourseAdapter(MainActivity.this,R.layout.course_item,courseList.getCourseList7());
-//			list[6].setAdapter(adapter[6]);
-//		}
-//		else
-//		{
-//			adapter[0].notifyDataSetChanged();
-//			adapter[1].notifyDataSetChanged();
-//			adapter[2].notifyDataSetChanged();
-//			adapter[3].notifyDataSetChanged();
-//			adapter[4].notifyDataSetChanged();
-//			adapter[5].notifyDataSetChanged();
-//			adapter[6].notifyDataSetChanged();
-//		}
-//	}
 	//使CourseList中的数据成为数据库的数据
 	public void adbSuit(){
 		List<Course> adbCourseList = DataSupport.where("weekDay = ?","1").order("id").find(Course.class);
